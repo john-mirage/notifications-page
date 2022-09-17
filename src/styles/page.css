@@ -1,4 +1,11 @@
 .page {
   background-color: var(--color-white);
-  padding: 1.5rem 1rem;
+}
+
+@media screen and (min-width: 794px) {
+  .page {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    background-color: var(--color-very-light-grayish-blue);
+  }
 }

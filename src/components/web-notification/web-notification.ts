@@ -6,6 +6,7 @@ class WebNotification extends HTMLLIElement {
   avatarElement: HTMLImageElement;
   usernameElement: HTMLSpanElement;
   createdAtElement: HTMLSpanElement;
+  indicatorElement: HTMLSpanElement;
   
   constructor() {
     super();
@@ -14,6 +15,7 @@ class WebNotification extends HTMLLIElement {
     this.avatarElement = <HTMLImageElement>this.#templateFragment.querySelector('[data-id="web-notification-avatar"]');
     this.usernameElement = <HTMLSpanElement>this.#templateFragment.querySelector('[data-id="web-notification-username"]');
     this.createdAtElement = <HTMLSpanElement>this.#templateFragment.querySelector('[data-id="web-notification-created-at"]');
+    this.indicatorElement = <HTMLSpanElement>this.#templateFragment.querySelector('[data-id="web-notification-indicator"]');
   }
 
   get notification(): AppData.Notification {
@@ -30,6 +32,11 @@ class WebNotification extends HTMLLIElement {
     this.avatarElement.setAttribute("alt", this.#notification.username);
     this.usernameElement.textContent = this.#notification.username;
     this.createdAtElement.textContent = this.#notification.createdAt;
+    if (!this.#notification.markedAsRead) {
+      this.classList.add("web-notification--unread");
+    } else {
+      this.indicatorElement.remove();
+    }
   }
 
   connectedCallback() {

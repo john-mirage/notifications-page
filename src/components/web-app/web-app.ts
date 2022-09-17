@@ -66,6 +66,7 @@ class WebApp extends HTMLElement {
               createdAt: notification.createdAt,
               markedAsRead: notification.markedAsRead
             };
+            webReplyNotification.post = (<AppData.ReplyNotification>notification).post;
             return webReplyNotification;
           case "follow":
             const webFollowNotification = <WebFollowNotification>this.webFollowNotification.cloneNode(true);
