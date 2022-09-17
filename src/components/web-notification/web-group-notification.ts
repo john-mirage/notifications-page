@@ -1,12 +1,7 @@
 import WebNotification from "@components/web-notification/web-notification";
 
-interface Group {
-  action: string;
-  group: string;
-}
-
 class WebGroupNotification extends WebNotification {
-  #group?: Group;
+  #groupNotification?: AppData.GroupNotification;
   #groupLabelElement = document.createElement("span");
   #groupValueElement = document.createElement("a");
 
@@ -16,25 +11,32 @@ class WebGroupNotification extends WebNotification {
     this.#groupValueElement.classList.add("web-notification__group", "web-notification__group--value");
   }
 
-  get group(): Group {
-    if (this.#group) {
-      return this.#group;
+  get groupNotification(): AppData.GroupNotification {
+    if (this.#groupNotification) {
+      return this.#groupNotification;
     } else {
-      throw new Error("The group is not defined");
+      throw new Error("The group notification is not defined");
     }
   }
 
-  set group(newGroup: Group) {
-    this.#group = newGroup;
-    this.#groupLabelElement.textContent = this.#group.action;
-    this.#groupValueElement.textContent = this.#group.group;
+  set groupNotification(newGroupNotification: AppData.GroupNotification) {
+    this.#groupNotification = newGroupNotification;
+    this.notification = {
+      type: this.#groupNotification.type,
+      username: this.#groupNotification.username,
+      avatar: this.#groupNotification.avatar,
+      createdAt: this.#groupNotification.createdAt,
+      markedAsRead: this.#groupNotification.markedAsRead
+    }
+    this.#groupLabelElement.textContent = this.#groupNotification.action;
+    this.#groupValueElement.textContent = this.#groupNotification.group;
     this.#groupValueElement.setAttribute("href", "#");
     this.usernameElement.after(this.#groupLabelElement, this.#groupValueElement);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.upgradeProperty("group");
+    this.upgradeProperty("groupNotification");
   }
 }
 

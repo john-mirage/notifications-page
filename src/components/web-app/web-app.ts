@@ -59,55 +59,23 @@ class WebApp extends HTMLElement {
         switch (notification.type) {
           case "reply":
             const webReplyNotification = <WebReplyNotification>this.webReplyNotification.cloneNode(true);
-            webReplyNotification.notification = {
-              type: notification.type,
-              username: notification.username,
-              avatar: notification.avatar,
-              createdAt: notification.createdAt,
-              markedAsRead: notification.markedAsRead
-            };
-            webReplyNotification.post = (<AppData.ReplyNotification>notification).post;
+            webReplyNotification.replyNotification = <AppData.ReplyNotification>notification;
             return webReplyNotification;
           case "follow":
             const webFollowNotification = <WebFollowNotification>this.webFollowNotification.cloneNode(true);
-            webFollowNotification.notification = {
-              type: notification.type,
-              username: notification.username,
-              avatar: notification.avatar,
-              createdAt: notification.createdAt,
-              markedAsRead: notification.markedAsRead
-            };
+            webFollowNotification.followNotification = <AppData.Notification>notification;
             return webFollowNotification;
           case "group":
             const webGroupNotification = <WebGroupNotification>this.webGroupNotification.cloneNode(true);
-            webGroupNotification.notification = {
-              type: notification.type,
-              username: notification.username,
-              avatar: notification.avatar,
-              createdAt: notification.createdAt,
-              markedAsRead: notification.markedAsRead
-            };
-            webGroupNotification.group = { action: notification.action, group: notification.group };
+            webGroupNotification.groupNotification = <AppData.GroupNotification>notification;
             return webGroupNotification;
           case "message":
             const webMessageNotification = <WebMessageNotification>this.webMessageNotification.cloneNode(true);
-            webMessageNotification.notification = {
-              type: notification.type,
-              username: notification.username,
-              avatar: notification.avatar,
-              createdAt: notification.createdAt,
-              markedAsRead: notification.markedAsRead
-            };
+            webMessageNotification.messageNotification = <AppData.MessageNotification>notification;
             return webMessageNotification;
           case "comment":
             const webCommentNotification = <WebCommentNotification>this.webCommentNotification.cloneNode(true);
-            webCommentNotification.notification = {
-              type: notification.type,
-              username: notification.username,
-              avatar: notification.avatar,
-              createdAt: notification.createdAt,
-              markedAsRead: notification.markedAsRead
-            };
+            webCommentNotification.commentNotification = <AppData.CommentNotification>notification;
             return webCommentNotification;
           default:
             throw new Error("The notification type is not valid");

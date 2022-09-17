@@ -48,6 +48,11 @@
   font-weight: 500;
   color: var(--color-dark-grayish-blue);
   cursor: pointer;
+  transition: color 150ms;
+}
+
+.web-app__button:hover {
+  color: var(--color-blue);
 }
 
 .web-app__notification-list {
@@ -60,5 +65,6 @@
   .web-app {
     padding: 2.25rem 2rem;
     border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.04), 0 4px 6px -4px rgb(0 0 0 / 0.04);
   }
 }

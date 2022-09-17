@@ -1,9 +1,9 @@
 import WebNotification from "@components/web-notification/web-notification";
 
 class WebReplyNotification extends WebNotification {
-  #post?: string;
+  #replyNotification?: AppData.ReplyNotification;
   #postLabelElement = document.createElement("span");
-  #postValueElement = document.createElement("span");
+  #postValueElement = document.createElement("a");
   
   constructor() {
     super();
@@ -12,23 +12,31 @@ class WebReplyNotification extends WebNotification {
     this.#postLabelElement.textContent = "reacted to your recent post";
   }
 
-  get post(): string {
-    if (this.#post) {
-      return this.#post;
+  get replyNotification(): AppData.ReplyNotification {
+    if (this.#replyNotification) {
+      return this.#replyNotification;
     } else {
-      throw new Error("The post is not defined");
+      throw new Error("The reply notification is not defined");
     }
   }
 
-  set post(newPost: string) {
-    this.#post = newPost;
-    this.#postValueElement.textContent = newPost;
+  set replyNotification(newReplyNotification: AppData.ReplyNotification) {
+    this.#replyNotification = newReplyNotification;
+    this.notification = {
+      type: this.#replyNotification.type,
+      username: this.#replyNotification.username,
+      avatar: this.#replyNotification.avatar,
+      createdAt: this.#replyNotification.createdAt,
+      markedAsRead: this.#replyNotification.markedAsRead
+    }
+    this.#postValueElement.textContent = this.#replyNotification.post;
+    this.#postValueElement.setAttribute("href", "#");
     this.usernameElement.after(this.#postLabelElement, this.#postValueElement);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.upgradeProperty("post");
+    this.upgradeProperty("replyNotification");
   }
 }
 
