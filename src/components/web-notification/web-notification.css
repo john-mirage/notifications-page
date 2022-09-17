@@ -4,6 +4,8 @@
   flex-direction: row;
   align-items: flex-start;
   padding: 1rem;
+  background-color: transparent;
+  transition: background-color 300ms;
 }
 
 .web-notification--unread {
@@ -116,13 +118,18 @@
 }
 
 .web-notification__indicator {
-  display: none;
-}
-
-.web-notification--unread .web-notification__indicator {
   display: inline-block;
+  transform: scale(0);
+  opacity: 0;
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 9999px;
   background-color: var(--color-red);
+  transition-property: transform, opacity;
+  transition-duration: 300ms;
+}
+
+.web-notification--unread .web-notification__indicator {
+  transform: scale(1);
+  opacity: 1;
 }

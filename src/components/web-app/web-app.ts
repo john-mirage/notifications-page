@@ -7,11 +7,13 @@ import WebReplyNotification from "@components/web-notification/web-reply-notific
 import notifications from "@data/notifications.json";
 
 class WebApp extends HTMLElement {
-  #webReplyNotification?: WebReplyNotification;
-  #webFollowNotification?: WebFollowNotification;
-  #webGroupNotification?: WebGroupNotification;
-  #webMessageNotification?: WebMessageNotification;
-  #webCommentNotification?: WebCommentNotification;
+  #webReplyNotification = <WebReplyNotification>document.createElement("li", { is: "web-reply-notification" });
+  #webFollowNotification = <WebFollowNotification>document.createElement("li", { is: "web-follow-notification" });
+  #webGroupNotification = <WebGroupNotification>document.createElement("li", { is: "web-group-notification" });
+  #webMessageNotification = <WebMessageNotification>document.createElement("li", { is: "web-message-notification" });
+  #webCommentNotification = <WebCommentNotification>document.createElement("li", { is: "web-comment-notification" });
+  #webNotifications?: WebNotification[];
+  #notifications?: AppData.Notification[];
   notificationListElement: HTMLUListElement;
   notificationCountElement: HTMLDivElement;
   buttonElement: HTMLButtonElement;
@@ -28,41 +30,6 @@ class WebApp extends HTMLElement {
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  get webReplyNotification(): WebReplyNotification {
-    if (this.#webReplyNotification === undefined) {
-      this.#webReplyNotification = <WebReplyNotification>document.createElement("li", { is: "web-reply-notification" });
-    }
-    return this.#webReplyNotification;
-  }
-
-  get webFollowNotification(): WebFollowNotification {
-    if (this.#webFollowNotification === undefined) {
-      this.#webFollowNotification = <WebFollowNotification>document.createElement("li", { is: "web-follow-notification" });
-    }
-    return this.#webFollowNotification;
-  }
-
-  get webGroupNotification(): WebGroupNotification {
-    if (this.#webGroupNotification === undefined) {
-      this.#webGroupNotification = <WebGroupNotification>document.createElement("li", { is: "web-group-notification" });
-    }
-    return this.#webGroupNotification;
-  }
-
-  get webMessageNotification(): WebMessageNotification {
-    if (this.#webMessageNotification === undefined) {
-      this.#webMessageNotification = <WebMessageNotification>document.createElement("li", { is: "web-message-notification" });
-    }
-    return this.#webMessageNotification;
-  }
-
-  get webCommentNotification(): WebCommentNotification {
-    if (this.#webCommentNotification === undefined) {
-      this.#webCommentNotification = <WebCommentNotification>document.createElement("li", { is: "web-comment-notification" });
-    }
-    return this.#webCommentNotification;
-  }
-
   get unreadNotifications(): string | null {
     return this.getAttribute("unread-notifications");
   }
@@ -75,38 +42,62 @@ class WebApp extends HTMLElement {
     }
   }
 
-  connectedCallback() {
+  get webNotifications(): WebNotification[] {
+    if (this.#webNotifications) {
+      return this.#webNotifications;
+    } else {
+      throw new Error("The web notifications are not defined");
+    }
+  }
+
+  set webNotifications(newWebNotifications: WebNotification[]) {
+    this.#webNotifications = newWebNotifications;
+    this.notificationListElement.replaceChildren(...this.#webNotifications);
+  }
+
+  get notifications(): AppData.Notification[] {
+    if (this.#notifications) {
+      return this.#notifications;
+    } else {
+      throw new Error("The notifications are not defined");
+    }
+  }
+
+  set notifications(newNotifications: AppData.Notification[]) {
+    this.#notifications = newNotifications;
     let unreadNotifications = 0;
-    this.notificationListElement.replaceChildren(
-      ...notifications.map((notification) => {
-        if (!notification.markedAsRead) unreadNotifications += 1;
-        switch (notification.type) {
-          case "reply":
-            const webReplyNotification = <WebReplyNotification>this.webReplyNotification.cloneNode(true);
-            webReplyNotification.replyNotification = <AppData.ReplyNotification>notification;
-            return webReplyNotification;
-          case "follow":
-            const webFollowNotification = <WebFollowNotification>this.webFollowNotification.cloneNode(true);
-            webFollowNotification.followNotification = <AppData.Notification>notification;
-            return webFollowNotification;
-          case "group":
-            const webGroupNotification = <WebGroupNotification>this.webGroupNotification.cloneNode(true);
-            webGroupNotification.groupNotification = <AppData.GroupNotification>notification;
-            return webGroupNotification;
-          case "message":
-            const webMessageNotification = <WebMessageNotification>this.webMessageNotification.cloneNode(true);
-            webMessageNotification.messageNotification = <AppData.MessageNotification>notification;
-            return webMessageNotification;
-          case "comment":
-            const webCommentNotification = <WebCommentNotification>this.webCommentNotification.cloneNode(true);
-            webCommentNotification.commentNotification = <AppData.CommentNotification>notification;
-            return webCommentNotification;
-          default:
-            throw new Error("The notification type is not valid");
-        }
-      })
-    );
+    this.webNotifications = this.#notifications.map((notification) => {
+      if (!notification.markedAsRead) unreadNotifications += 1;
+      switch (notification.type) {
+        case "reply":
+          const webReplyNotification = <WebReplyNotification>this.#webReplyNotification.cloneNode(true);
+          webReplyNotification.replyNotification = <AppData.ReplyNotification>notification;
+          return webReplyNotification;
+        case "follow":
+          const webFollowNotification = <WebFollowNotification>this.#webFollowNotification.cloneNode(true);
+          webFollowNotification.followNotification = <AppData.Notification>notification;
+          return webFollowNotification;
+        case "group":
+          const webGroupNotification = <WebGroupNotification>this.#webGroupNotification.cloneNode(true);
+          webGroupNotification.groupNotification = <AppData.GroupNotification>notification;
+          return webGroupNotification;
+        case "message":
+          const webMessageNotification = <WebMessageNotification>this.#webMessageNotification.cloneNode(true);
+          webMessageNotification.messageNotification = <AppData.MessageNotification>notification;
+          return webMessageNotification;
+        case "comment":
+          const webCommentNotification = <WebCommentNotification>this.#webCommentNotification.cloneNode(true);
+          webCommentNotification.commentNotification = <AppData.CommentNotification>notification;
+          return webCommentNotification;
+        default:
+          throw new Error("The notification type is not valid");
+      }
+    });
     this.unreadNotifications = String(unreadNotifications);
+  }
+
+  connectedCallback() {
+    this.notifications = notifications;
     this.buttonElement.addEventListener("click", this.handleButtonClick);
   }
 
@@ -133,8 +124,7 @@ class WebApp extends HTMLElement {
   }
 
   handleButtonClick() {
-    const webNotifications = <WebNotification[]>Array.from(this.notificationListElement.children);
-    webNotifications.forEach((webNotification) => {
+    this.webNotifications.forEach((webNotification) => {
       if (!webNotification.markedAsRead) webNotification.markedAsRead = true;
     });
     this.unreadNotifications = "0";
