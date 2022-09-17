@@ -6,8 +6,8 @@ class WebMessageNotification extends WebNotification {
   }
 
   connectedCallback() {
-
+    super.connectedCallback();
   }
- }
+}
 
- export default WebMessageNotification;
+export default WebMessageNotification;

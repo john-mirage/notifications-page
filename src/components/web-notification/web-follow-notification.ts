@@ -6,8 +6,8 @@ class WebFollowNotification extends WebNotification {
   }
 
   connectedCallback() {
-
+    super.connectedCallback();
   }
- }
+}
 
- export default WebFollowNotification;
+export default WebFollowNotification;

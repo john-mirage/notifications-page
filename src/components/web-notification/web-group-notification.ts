@@ -6,8 +6,8 @@ class WebGroupNotification extends WebNotification {
   }
 
   connectedCallback() {
-
+    super.connectedCallback();
   }
- }
+}
 
- export default WebGroupNotification;
+export default WebGroupNotification;

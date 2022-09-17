@@ -6,7 +6,7 @@ class WebCommentNotification extends WebNotification {
   }
 
   connectedCallback() {
-
+    super.connectedCallback();
   }
  }
 

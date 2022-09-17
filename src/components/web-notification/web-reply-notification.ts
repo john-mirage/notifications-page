@@ -6,7 +6,7 @@ class WebReplyNotification extends WebNotification {
   }
 
   connectedCallback() {
-
+    super.connectedCallback();
   }
  }
 

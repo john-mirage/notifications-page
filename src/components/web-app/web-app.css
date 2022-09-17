@@ -39,3 +39,9 @@
   font-weight: 500;
   color: var(--color-dark-grayish-blue);
 }
+
+.web-app__notification-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
