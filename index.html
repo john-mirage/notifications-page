@@ -26,7 +26,26 @@
   <meta property="twitter:image" content="https://john-mirage.github.io/notifications-page/preview.jpg">
 </head>
 
-<body>
+<body class="page">
+  <!-- web app -->
+  <main class="web-app" is="web-app">
+    <header class="web-app__header">
+      <div class="web-app__row">
+        <h1 class="web-app__title">Notifications</h1>
+        <div class="web-app__notification-count" data-id="web-app-notification-count">3</div>
+      </div>
+      <button class="web-app__button" data-id="web-app-button">Mark all as read</button>
+    </header>
+    <ul class="web-app__notification-list" data-id="web-app-notification-list"></ul>
+  </main>
+
+  <!-- template | web notification -->
+  <template id="template-web-notification">
+    <img class="web-notification__avatar" data-id="web-notification-avatar"/>
+    <div class="web-notification__content" data-id="web-notification-content"></div>
+  </template>
+
+  <!-- module -->
   <script type="module" src="/src/main.ts"></script>
 </body>
 

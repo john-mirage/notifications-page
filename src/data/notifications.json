@@ -1,0 +1,59 @@
+[
+  {
+    "type": "reply",
+    "username": "Mark Webber",
+    "avatar": "./avatar-mark-webber.webp",
+    "createdAt": "1m ago",
+    "markedAsRead": false,
+    "post": "My first tournament today!"
+  },
+  {
+    "type": "follow",
+    "username": "Angela Cray",
+    "avatar": "./avatar-angela-cray.webp",
+    "createdAt": "5m ago",
+    "markedAsRead": false
+  },
+  {
+    "type": "group",
+    "username": "Jacob Thompson",
+    "avatar": "./avatar-jacob-thompson.webp",
+    "createdAt": "1 day ago",
+    "markedAsRead": false,
+    "action": "has joined",
+    "group": "Chess club"
+  },
+  {
+    "type": "message",
+    "username": "Rizky Hasanuddin",
+    "avatar": "./avatar-rizky-hasanuddin.webp",
+    "createdAt": "5 days ago",
+    "markedAsRead": true,
+    "message": "Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and i'm already having lots of fun and improving my game."
+  },
+  {
+    "type": "comment",
+    "username": "Kimberly Smith",
+    "avatar": "./avatar-kimberly-smith.webp",
+    "createdAt": "1 week ago",
+    "markedAsRead": true,
+    "picture": "./image-chess.webp"
+  },
+  {
+    "type": "reply",
+    "username": "Nathan Peterson",
+    "avatar": "./avatar-nathan-peterson.webp",
+    "createdAt": "2 weeks ago",
+    "markedAsRead": true,
+    "post": "5 end-game strategies to increase your win rate"
+  },
+  {
+    "type": "group",
+    "username": "Anna Kim",
+    "avatar": "./avatar-anna-kim.webp",
+    "createdAt": "2 weeks ago",
+    "markedAsRead": true,
+    "action": "left",
+    "group": "Chess club"
+  }
+]
