@@ -32,11 +32,7 @@ class WebNotification extends HTMLLIElement {
     this.avatarElement.setAttribute("alt", this.#notification.username);
     this.usernameElement.textContent = this.#notification.username;
     this.createdAtElement.textContent = this.#notification.createdAt;
-    if (!this.#notification.markedAsRead) {
-      this.classList.add("web-notification--unread");
-    } else {
-      this.indicatorElement.remove();
-    }
+    if (!this.#notification.markedAsRead) this.classList.add("web-notification--unread");
   }
 
   connectedCallback() {

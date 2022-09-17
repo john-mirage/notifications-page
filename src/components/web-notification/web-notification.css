@@ -58,6 +58,10 @@
 }
 
 .web-notification__indicator {
+  display: none;
+}
+
+.web-notification--unread .web-notification__indicator {
   display: inline-block;
   width: 0.5rem;
   height: 0.5rem;

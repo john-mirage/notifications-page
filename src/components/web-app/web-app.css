@@ -47,6 +47,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--color-dark-grayish-blue);
+  cursor: pointer;
 }
 
 .web-app__notification-list {
