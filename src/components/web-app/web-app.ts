@@ -87,6 +87,7 @@ class WebApp extends HTMLElement {
               createdAt: notification.createdAt,
               markedAsRead: notification.markedAsRead
             };
+            webGroupNotification.group = { action: notification.action, group: notification.group };
             return webGroupNotification;
           case "message":
             const webMessageNotification = <WebMessageNotification>this.webMessageNotification.cloneNode(true);

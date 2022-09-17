@@ -20,7 +20,7 @@
     "avatar": "./avatar-jacob-thompson.webp",
     "createdAt": "1 day ago",
     "markedAsRead": false,
-    "action": "has joined",
+    "action": "has joined your group",
     "group": "Chess club"
   },
   {
@@ -53,7 +53,7 @@
     "avatar": "./avatar-anna-kim.webp",
     "createdAt": "2 weeks ago",
     "markedAsRead": true,
-    "action": "left",
+    "action": "left the group",
     "group": "Chess club"
   }
 ]

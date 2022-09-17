@@ -43,13 +43,21 @@
   color: var(--color-dark-grayish-blue);
 }
 
-.web-notification__post--label {
-  font-weight: 500;
+.web-notification__post--label { font-weight: 500; }
+.web-notification__post--value { font-weight: 700; }
+
+.web-notification__follow-label {
+  margin-right: 0.25rem;
+  color: var(--color-dark-grayish-blue);
 }
 
-.web-notification__post--value {
-  font-weight: 700;
+.web-notification__group {
+  margin-right: 0.25rem;
 }
+
+.web-notification__group--label { font-weight: 500; color: var(--color-dark-grayish-blue); }
+.web-notification__group--value { font-weight: 800; text-decoration: none; color: var(--color-blue); }
+.web-notification__group--value:hover { text-decoration: underline; }
 
 .web-notification__created-at {
   font-size: 0.875rem;

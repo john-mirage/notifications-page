@@ -7,20 +7,20 @@ namespace AppData {
     markedAsRead: boolean;
   }
 
-  interface ReplyNotification {
+  interface ReplyNotification extends Notification {
     post: string;
   }
 
-  interface GroupNotification {
+  interface GroupNotification extends Notification {
     action: string;
     group: string;
   }
 
-  interface MessageNotification {
+  interface MessageNotification extends Notification {
     message: string;
   }
 
-  interface CommentNotification {
+  interface CommentNotification extends Notification {
     picture: string;
   }
 }
