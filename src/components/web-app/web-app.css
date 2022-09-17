@@ -51,7 +51,12 @@
   transition: color 150ms;
 }
 
-.web-app__button:hover {
+.web-app__button:disabled {
+  color: var(--color-light-grayish-blue-2);
+  cursor: default;
+}
+
+.web-app__button:not(:disabled):hover {
   color: var(--color-blue);
 }
 

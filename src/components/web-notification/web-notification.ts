@@ -7,6 +7,10 @@ class WebNotification extends HTMLLIElement {
   usernameElement: HTMLSpanElement;
   createdAtElement: HTMLSpanElement;
   indicatorElement: HTMLSpanElement;
+
+  static get observedAttributes() {
+    return ["marked-as-read"];
+  }
   
   constructor() {
     super();
@@ -16,6 +20,18 @@ class WebNotification extends HTMLLIElement {
     this.usernameElement = <HTMLSpanElement>this.#templateFragment.querySelector('[data-id="web-notification-username"]');
     this.createdAtElement = <HTMLSpanElement>this.#templateFragment.querySelector('[data-id="web-notification-created-at"]');
     this.indicatorElement = <HTMLSpanElement>this.#templateFragment.querySelector('[data-id="web-notification-indicator"]');
+  }
+
+  get markedAsRead(): boolean {
+    return this.hasAttribute("marked-as-read");
+  }
+
+  set markedAsRead(isMarkedAsRead: boolean) {
+    if (isMarkedAsRead) {
+      this.setAttribute("marked-as-read", "");
+    } else {
+      this.removeAttribute("marked-as-read");
+    }
   }
 
   get notification(): AppData.Notification {
@@ -32,15 +48,16 @@ class WebNotification extends HTMLLIElement {
     this.avatarElement.setAttribute("alt", this.#notification.username);
     this.usernameElement.textContent = this.#notification.username;
     this.createdAtElement.textContent = this.#notification.createdAt;
-    if (!this.#notification.markedAsRead) this.classList.add("web-notification--unread");
+    this.markedAsRead = this.#notification.markedAsRead;
   }
 
   connectedCallback() {
     if (this.#initialMount) {
-      this.classList.add("web-notification");
+      this.classList.add("web-notification", "web-notification--unread");
       this.append(this.#templateFragment);
       this.#initialMount = false;
     }
+    this.upgradeProperty("marked-as-read");
     this.upgradeProperty("notification");
   }
 
@@ -49,6 +66,21 @@ class WebNotification extends HTMLLIElement {
       let value = this[prop];
       delete this[prop];
       this[prop] = value;
+    }
+  }
+
+  attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null) {
+    switch (name) {
+      case "marked-as-read":
+        const isMarkedAsRead = newValue !== null;
+        if (isMarkedAsRead) {
+          this.classList.remove("web-notification--unread");
+        } else {
+          this.classList.add("web-notification--unread");
+        }
+        break;
+      default:
+        throw new Error("The modified attribute is not watched");
     }
   }
 }

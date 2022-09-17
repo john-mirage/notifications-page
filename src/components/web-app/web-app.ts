@@ -2,6 +2,7 @@ import WebCommentNotification from "@components/web-notification/web-comment-not
 import WebFollowNotification from "@components/web-notification/web-follow-notification";
 import WebGroupNotification from "@components/web-notification/web-group-notification";
 import WebMessageNotification from "@components/web-notification/web-message-notification";
+import WebNotification from "@components/web-notification/web-notification";
 import WebReplyNotification from "@components/web-notification/web-reply-notification";
 import notifications from "@data/notifications.json";
 
@@ -12,10 +13,19 @@ class WebApp extends HTMLElement {
   #webMessageNotification?: WebMessageNotification;
   #webCommentNotification?: WebCommentNotification;
   notificationListElement: HTMLUListElement;
+  notificationCountElement: HTMLDivElement;
+  buttonElement: HTMLButtonElement;
+
+  static get observedAttributes() {
+    return ["unread-notifications"];
+  }
   
   constructor() {
     super();
     this.notificationListElement = <HTMLUListElement>this.querySelector('[data-id="web-app-notification-list"]');
+    this.notificationCountElement = <HTMLDivElement>this.querySelector('[data-id="web-app-notification-count"]');
+    this.buttonElement = <HTMLButtonElement>this.querySelector('[data-id="web-app-button"]');
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
   get webReplyNotification(): WebReplyNotification {
@@ -53,9 +63,23 @@ class WebApp extends HTMLElement {
     return this.#webCommentNotification;
   }
 
+  get unreadNotifications(): string | null {
+    return this.getAttribute("unread-notifications");
+  }
+
+  set unreadNotifications(newUnreadNotifications: string | null) {
+    if (newUnreadNotifications) {
+      this.setAttribute("unread-notifications", newUnreadNotifications);
+    } else {
+      this.removeAttribute("unread-notifications");
+    }
+  }
+
   connectedCallback() {
+    let unreadNotifications = 0;
     this.notificationListElement.replaceChildren(
       ...notifications.map((notification) => {
+        if (!notification.markedAsRead) unreadNotifications += 1;
         switch (notification.type) {
           case "reply":
             const webReplyNotification = <WebReplyNotification>this.webReplyNotification.cloneNode(true);
@@ -82,6 +106,38 @@ class WebApp extends HTMLElement {
         }
       })
     );
+    this.unreadNotifications = String(unreadNotifications);
+    this.buttonElement.addEventListener("click", this.handleButtonClick);
+  }
+
+  disconnectedCallback() {
+    this.buttonElement.removeEventListener("click", this.handleButtonClick);
+  }
+
+  attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null) {
+    switch (name) {
+      case "unread-notifications":
+        const notificationCount = newValue ? newValue : "0";
+        this.notificationCountElement.textContent = notificationCount;
+        if (notificationCount === "0") {
+          if (!this.buttonElement.hasAttribute("disabled")) {
+            this.buttonElement.setAttribute("disabled", "");
+          }
+        } else if (this.buttonElement.hasAttribute("disabled")) {
+          this.buttonElement.removeAttribute("disabled");
+        }
+        break;
+      default:
+        throw new Error("The modified attribute is not watched");
+    }
+  }
+
+  handleButtonClick() {
+    const webNotifications = <WebNotification[]>Array.from(this.notificationListElement.children);
+    webNotifications.forEach((webNotification) => {
+      if (!webNotification.markedAsRead) webNotification.markedAsRead = true;
+    });
+    this.unreadNotifications = "0";
   }
 }
 

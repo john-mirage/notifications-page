@@ -3,7 +3,7 @@ import WebNotification from "@components/web-notification/web-notification";
 class WebMessageNotification extends WebNotification {
   #messageNotification?: AppData.MessageNotification;
   #messageLabelElement: HTMLSpanElement = document.createElement("span");
-  #messageValueElement: HTMLParagraphElement = document.createElement("p");
+  #messageValueElement: HTMLAnchorElement = document.createElement("a");
 
   constructor() {
     super();
@@ -30,6 +30,7 @@ class WebMessageNotification extends WebNotification {
       markedAsRead: this.#messageNotification.markedAsRead
     }
     this.#messageValueElement.textContent = this.#messageNotification.message;
+    this.#messageValueElement.setAttribute("href", "#");
     this.usernameElement.after(this.#messageLabelElement);
     this.createdAtElement.after(this.#messageValueElement);
   }
