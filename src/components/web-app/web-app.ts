@@ -19,7 +19,7 @@ class WebApp extends HTMLElement {
   buttonElement: HTMLButtonElement;
 
   static get observedAttributes() {
-    return ["unread-notifications"];
+    return ["data-unread-notifications"];
   }
   
   constructor() {
@@ -30,15 +30,15 @@ class WebApp extends HTMLElement {
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  get unreadNotifications(): string | null {
-    return this.getAttribute("unread-notifications");
+  get unreadNotifications(): string | undefined {
+    return this.dataset.unreadNotifications;
   }
 
-  set unreadNotifications(newUnreadNotifications: string | null) {
+  set unreadNotifications(newUnreadNotifications: string | undefined) {
     if (newUnreadNotifications) {
-      this.setAttribute("unread-notifications", newUnreadNotifications);
+      this.dataset.unreadNotifications = newUnreadNotifications;
     } else {
-      this.removeAttribute("unread-notifications");
+      delete this.dataset.unreadNotifications;
     }
   }
 
@@ -107,7 +107,7 @@ class WebApp extends HTMLElement {
 
   attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null) {
     switch (name) {
-      case "unread-notifications":
+      case "data-unread-notifications":
         const notificationCount = newValue ? newValue : "0";
         if (notificationCount === "0") {
           this.badgeElement.classList.add("web-app__badge--empty");

@@ -9,7 +9,7 @@ class WebNotification extends HTMLLIElement {
   indicatorElement: HTMLSpanElement;
 
   static get observedAttributes() {
-    return ["marked-as-read"];
+    return ["data-marked-as-read"];
   }
   
   constructor() {
@@ -23,14 +23,14 @@ class WebNotification extends HTMLLIElement {
   }
 
   get markedAsRead(): boolean {
-    return this.hasAttribute("marked-as-read");
+    return this.hasAttribute("data-marked-as-read");
   }
 
   set markedAsRead(isMarkedAsRead: boolean) {
     if (isMarkedAsRead) {
-      this.setAttribute("marked-as-read", "");
+      this.dataset.markedAsRead = "";
     } else {
-      this.removeAttribute("marked-as-read");
+      delete this.dataset.markedAsRead;
     }
   }
 
@@ -57,7 +57,7 @@ class WebNotification extends HTMLLIElement {
       this.append(this.#templateFragment);
       this.#initialMount = false;
     }
-    this.upgradeProperty("marked-as-read");
+    this.upgradeProperty("markedAsRead");
     this.upgradeProperty("notification");
   }
 
@@ -71,7 +71,7 @@ class WebNotification extends HTMLLIElement {
 
   attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null) {
     switch (name) {
-      case "marked-as-read":
+      case "data-marked-as-read":
         const isMarkedAsRead = newValue !== null;
         if (isMarkedAsRead) {
           this.classList.remove("web-notification--unread");
