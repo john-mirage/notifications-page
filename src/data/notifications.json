@@ -37,7 +37,8 @@
     "avatar": "./avatar-kimberly-smith.webp",
     "createdAt": "1 week ago",
     "markedAsRead": true,
-    "picture": "./image-chess.webp"
+    "picture": "./image-chess.webp",
+    "pictureAlt": "chess club"
   },
   {
     "type": "reply",

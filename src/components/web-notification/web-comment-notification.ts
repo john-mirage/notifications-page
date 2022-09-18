@@ -34,7 +34,9 @@ class WebCommentNotification extends WebNotification {
       createdAt: this.#commentNotification.createdAt,
       markedAsRead: this.#commentNotification.markedAsRead
     }
+    this.#commentLinkElement.setAttribute("aria-label", this.#commentNotification.pictureAlt);
     this.#commentPictureElement.setAttribute("src", this.#commentNotification.picture);
+    this.#commentPictureElement.setAttribute("alt", this.#commentNotification.pictureAlt);
     this.usernameElement.after(" ", this.#commentLabelElement);
     this.append(this.#commentLinkElement);
   }

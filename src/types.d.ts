@@ -22,5 +22,6 @@ namespace AppData {
 
   interface CommentNotification extends Notification {
     picture: string;
+    pictureAlt: string;
   }
 }
