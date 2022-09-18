@@ -159,7 +159,18 @@
     line-height: 1.4375rem;
   }
 
+  .web-notification__avatar {
+    margin-right: 1rem;
+    width: 2.875rem;
+    height: 2.875rem;
+  }
+
   .web-notification__message-link {
     line-height: 1.3125rem;
+  }
+
+  .web-notification__comment-picture {
+    width: 2.875rem;
+    height: 2.875rem;
   }
 }
