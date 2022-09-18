@@ -7,8 +7,8 @@ class WebGroupNotification extends WebNotification {
 
   constructor() {
     super();
-    this.#groupLabelElement.classList.add("web-notification__group", "web-notification__group--label");
-    this.#groupValueElement.classList.add("web-notification__group", "web-notification__group--value");
+    this.#groupLabelElement.classList.add("web-notification__group-label");
+    this.#groupValueElement.classList.add("web-notification__group-link");
   }
 
   get groupNotification(): AppData.GroupNotification {
@@ -31,7 +31,7 @@ class WebGroupNotification extends WebNotification {
     this.#groupLabelElement.textContent = this.#groupNotification.action;
     this.#groupValueElement.textContent = this.#groupNotification.group;
     this.#groupValueElement.setAttribute("href", "#");
-    this.usernameElement.after(this.#groupLabelElement, this.#groupValueElement);
+    this.usernameElement.after(" ", this.#groupLabelElement, " ", this.#groupValueElement);
   }
 
   connectedCallback() {

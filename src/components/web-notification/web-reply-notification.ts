@@ -7,8 +7,8 @@ class WebReplyNotification extends WebNotification {
   
   constructor() {
     super();
-    this.#postLabelElement.classList.add("web-notification__post", "web-notification__post--label");
-    this.#postValueElement.classList.add("web-notification__post", "web-notification__post--value");
+    this.#postLabelElement.classList.add("web-notification__reply-label");
+    this.#postValueElement.classList.add("web-notification__reply-link");
     this.#postLabelElement.textContent = "reacted to your recent post";
   }
 
@@ -31,7 +31,7 @@ class WebReplyNotification extends WebNotification {
     }
     this.#postValueElement.textContent = this.#replyNotification.post;
     this.#postValueElement.setAttribute("href", "#");
-    this.usernameElement.after(this.#postLabelElement, this.#postValueElement);
+    this.usernameElement.after(" ", this.#postLabelElement, " ", this.#postValueElement);
   }
 
   connectedCallback() {

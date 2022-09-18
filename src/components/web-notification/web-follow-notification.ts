@@ -27,7 +27,7 @@ class WebFollowNotification extends WebNotification {
       createdAt: this.#followNotification.createdAt,
       markedAsRead: this.#followNotification.markedAsRead
     }
-    this.usernameElement.after(this.#followLabelElement);
+    this.usernameElement.after(" ", this.#followLabelElement);
   }
 
   connectedCallback() {

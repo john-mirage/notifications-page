@@ -7,8 +7,8 @@ class WebMessageNotification extends WebNotification {
 
   constructor() {
     super();
-    this.#messageLabelElement.classList.add("web-notification__message", "web-notification__message--label");
-    this.#messageValueElement.classList.add("web-notification__message", "web-notification__message--value");
+    this.#messageLabelElement.classList.add("web-notification__message-label");
+    this.#messageValueElement.classList.add("web-notification__message-link");
     this.#messageLabelElement.textContent = "sent you a private message";
   }
 
@@ -31,7 +31,7 @@ class WebMessageNotification extends WebNotification {
     }
     this.#messageValueElement.textContent = this.#messageNotification.message;
     this.#messageValueElement.setAttribute("href", "#");
-    this.usernameElement.after(this.#messageLabelElement);
+    this.usernameElement.after(" ", this.#messageLabelElement);
     this.createdAtElement.after(this.#messageValueElement);
   }
 

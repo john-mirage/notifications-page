@@ -15,7 +15,7 @@ class WebApp extends HTMLElement {
   #webNotifications?: WebNotification[];
   #notifications?: AppData.Notification[];
   notificationListElement: HTMLUListElement;
-  notificationCountElement: HTMLDivElement;
+  badgeElement: HTMLDivElement;
   buttonElement: HTMLButtonElement;
 
   static get observedAttributes() {
@@ -25,7 +25,7 @@ class WebApp extends HTMLElement {
   constructor() {
     super();
     this.notificationListElement = <HTMLUListElement>this.querySelector('[data-id="web-app-notification-list"]');
-    this.notificationCountElement = <HTMLDivElement>this.querySelector('[data-id="web-app-notification-count"]');
+    this.badgeElement = <HTMLDivElement>this.querySelector('[data-id="web-app-badge"]');
     this.buttonElement = <HTMLButtonElement>this.querySelector('[data-id="web-app-button"]');
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
@@ -109,13 +109,13 @@ class WebApp extends HTMLElement {
     switch (name) {
       case "unread-notifications":
         const notificationCount = newValue ? newValue : "0";
-        this.notificationCountElement.textContent = notificationCount;
         if (notificationCount === "0") {
-          if (!this.buttonElement.hasAttribute("disabled")) {
-            this.buttonElement.setAttribute("disabled", "");
-          }
-        } else if (this.buttonElement.hasAttribute("disabled")) {
-          this.buttonElement.removeAttribute("disabled");
+          this.badgeElement.classList.add("web-app__badge--empty");
+          if (!this.buttonElement.hasAttribute("disabled")) this.buttonElement.setAttribute("disabled", "");
+        } else {
+          this.badgeElement.textContent = notificationCount;
+          this.badgeElement.classList.remove("web-app__badge--empty");
+          if (this.buttonElement.hasAttribute("disabled")) this.buttonElement.removeAttribute("disabled");
         }
         break;
       default:

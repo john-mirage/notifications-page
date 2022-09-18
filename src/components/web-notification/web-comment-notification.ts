@@ -3,14 +3,18 @@ import WebNotification from "@components/web-notification/web-notification";
 class WebCommentNotification extends WebNotification {
   #commentNotification?: AppData.CommentNotification;
   #commentLabelElement: HTMLSpanElement = document.createElement("span");
+  #commentLinkElement: HTMLAnchorElement = document.createElement("a");
   #commentPictureElement: HTMLImageElement = document.createElement("img");
 
   constructor() {
     super();
     this.#commentLabelElement.classList.add("web-notification__comment-label");
+    this.#commentLinkElement.classList.add("web-notification__comment-link");
     this.#commentPictureElement.classList.add("web-notification__comment-picture");
+    this.#commentLinkElement.setAttribute("href", "#");
     this.#commentPictureElement.setAttribute("draggable", "false");
     this.#commentLabelElement.textContent = "commented on your picture";
+    this.#commentLinkElement.append(this.#commentPictureElement);
   }
 
   get commentNotification(): AppData.CommentNotification {
@@ -31,8 +35,8 @@ class WebCommentNotification extends WebNotification {
       markedAsRead: this.#commentNotification.markedAsRead
     }
     this.#commentPictureElement.setAttribute("src", this.#commentNotification.picture);
-    this.usernameElement.after(this.#commentLabelElement);
-    this.append(this.#commentPictureElement);
+    this.usernameElement.after(" ", this.#commentLabelElement);
+    this.append(this.#commentLinkElement);
   }
 
   connectedCallback() {
